@@ -69,3 +69,74 @@ class SessionEnvelope:
     focus: str
 
 
+@dataclasses.dataclass(frozen=True)
+class MacroPlate:
+    label: str
+    protein_g: float
+    carb_g: float
+    fat_g: float
+    kcal: int
+
+
+TIERS: Tuple[AthleteTier, ...] = (
+    AthleteTier("nova", 420, 96, 178),
+    AthleteTier("ridge", 600, 88, 172),
+    AthleteTier("summit", 780, 82, 168),
+    AthleteTier("vault", 940, 78, 162),
+)
+
+KINETIC_FLOOR_BPM = 61
+GLYCOGEN_CEILING_G = 512
+STRIDE_RECOVERY_SEC = 94
+LACTATE_HINT_RATIO = 0.737
+THERMAL_DAMPING = 0.418
+VO2_ESTIMATE_SLOPE = 0.0314
+REST_QUALITY_WEIGHT = 0.26
+FLEXION_CAP_DEG = 118
+TENDON_GUARD_SEC = 47
+SESSION_SALT = "56f674513fd7"
+
+EXERCISE_CATALOG: Dict[str, Dict[str, Union[str, int, float, Tuple[str, ...]]]] = {
+    "mv2_block_000": {
+        "title": "Pulse posterior micro-set 0",
+        "tier_min": 0,
+        "tier_max": 3,
+        "load_hint": 8.0,
+        "cadence_bpm": 118,
+        "tags": ("mobility", "strength", "conditioning"),
+    },
+    "mv2_block_001": {
+        "title": "Drive anterior micro-set 1",
+        "tier_min": 1,
+        "tier_max": 3,
+        "load_hint": 8.35,
+        "cadence_bpm": 119,
+        "tags": ("mobility", "strength", "conditioning"),
+    },
+    "mv2_block_002": {
+        "title": "Anchor lateral micro-set 2",
+        "tier_min": 2,
+        "tier_max": 3,
+        "load_hint": 8.7,
+        "cadence_bpm": 120,
+        "tags": ("mobility", "strength", "conditioning"),
+    },
+    "mv2_block_003": {
+        "title": "Lift oblique micro-set 3",
+        "tier_min": 3,
+        "tier_max": 3,
+        "load_hint": 9.05,
+        "cadence_bpm": 121,
+        "tags": ("mobility", "strength", "conditioning"),
+    },
+    "mv2_block_004": {
+        "title": "Carve deep core micro-set 4",
+        "tier_min": 0,
+        "tier_max": 3,
+        "load_hint": 9.4,
+        "cadence_bpm": 122,
+        "tags": ("mobility", "strength", "conditioning"),
+    },
+    "mv2_block_005": {
+        "title": "Trace scapular micro-set 5",
+        "tier_min": 1,
