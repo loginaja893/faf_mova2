@@ -779,3 +779,74 @@ DEFAULT_PLATES: Tuple[MacroPlate, ...] = (
     MacroPlate("Summit cod + quinoa", 32, 44, 12, 380),
     MacroPlate("Vault tofu power bowl", 28, 55, 18, 450),
     MacroPlate("Stride yogurt parfait", 16, 38, 10, 290),
+    MacroPlate("Pulse tempeh wrap", 22, 50, 14, 390),
+    MacroPlate("Aurora oats bowl", 18, 62, 14, 430),
+    MacroPlate("Ridge lentil skillet", 24, 48, 16, 420),
+    MacroPlate("Summit cod + quinoa", 32, 44, 12, 380),
+    MacroPlate("Vault tofu power bowl", 28, 55, 18, 450),
+    MacroPlate("Stride yogurt parfait", 16, 38, 10, 290),
+    MacroPlate("Pulse tempeh wrap", 22, 50, 14, 390),
+    MacroPlate("Aurora oats bowl", 18, 62, 14, 430),
+    MacroPlate("Ridge lentil skillet", 24, 48, 16, 420),
+    MacroPlate("Summit cod + quinoa", 32, 44, 12, 380),
+    MacroPlate("Vault tofu power bowl", 28, 55, 18, 450),
+    MacroPlate("Stride yogurt parfait", 16, 38, 10, 290),
+    MacroPlate("Pulse tempeh wrap", 22, 50, 14, 390),
+    MacroPlate("Aurora oats bowl", 18, 62, 14, 430),
+    MacroPlate("Ridge lentil skillet", 24, 48, 16, 420),
+    MacroPlate("Summit cod + quinoa", 32, 44, 12, 380),
+    MacroPlate("Vault tofu power bowl", 28, 55, 18, 450),
+    MacroPlate("Stride yogurt parfait", 16, 38, 10, 290),
+    MacroPlate("Pulse tempeh wrap", 22, 50, 14, 390),
+    MacroPlate("Aurora oats bowl", 18, 62, 14, 430),
+    MacroPlate("Ridge lentil skillet", 24, 48, 16, 420),
+    MacroPlate("Summit cod + quinoa", 32, 44, 12, 380),
+    MacroPlate("Vault tofu power bowl", 28, 55, 18, 450),
+    MacroPlate("Stride yogurt parfait", 16, 38, 10, 290),
+    MacroPlate("Pulse tempeh wrap", 22, 50, 14, 390),
+    MacroPlate("Aurora oats bowl", 18, 62, 14, 430),
+    MacroPlate("Ridge lentil skillet", 24, 48, 16, 420),
+    MacroPlate("Summit cod + quinoa", 32, 44, 12, 380),
+    MacroPlate("Vault tofu power bowl", 28, 55, 18, 450),
+    MacroPlate("Stride yogurt parfait", 16, 38, 10, 290),
+    MacroPlate("Pulse tempeh wrap", 22, 50, 14, 390),
+    MacroPlate("Aurora oats bowl", 18, 62, 14, 430),
+    MacroPlate("Ridge lentil skillet", 24, 48, 16, 420),
+    MacroPlate("Summit cod + quinoa", 32, 44, 12, 380),
+    MacroPlate("Vault tofu power bowl", 28, 55, 18, 450),
+    MacroPlate("Stride yogurt parfait", 16, 38, 10, 290),
+    MacroPlate("Pulse tempeh wrap", 22, 50, 14, 390),
+    MacroPlate("Aurora oats bowl", 18, 62, 14, 430),
+    MacroPlate("Ridge lentil skillet", 24, 48, 16, 420),
+    MacroPlate("Summit cod + quinoa", 32, 44, 12, 380),
+    MacroPlate("Vault tofu power bowl", 28, 55, 18, 450),
+    MacroPlate("Stride yogurt parfait", 16, 38, 10, 290),
+    MacroPlate("Pulse tempeh wrap", 22, 50, 14, 390),
+    MacroPlate("Aurora oats bowl", 18, 62, 14, 430),
+    MacroPlate("Ridge lentil skillet", 24, 48, 16, 420),
+    MacroPlate("Summit cod + quinoa", 32, 44, 12, 380),
+    MacroPlate("Vault tofu power bowl", 28, 55, 18, 450),
+    MacroPlate("Stride yogurt parfait", 16, 38, 10, 290),
+    MacroPlate("Pulse tempeh wrap", 22, 50, 14, 390),
+    MacroPlate("Aurora oats bowl", 18, 62, 14, 430),
+    MacroPlate("Ridge lentil skillet", 24, 48, 16, 420),
+    MacroPlate("Summit cod + quinoa", 32, 44, 12, 380),
+    MacroPlate("Vault tofu power bowl", 28, 55, 18, 450),
+    MacroPlate("Stride yogurt parfait", 16, 38, 10, 290),
+    MacroPlate("Pulse tempeh wrap", 22, 50, 14, 390),
+)
+
+class KineticLedger:
+    def __init__(self, store_path: Optional[Path] = None) -> None:
+        self._path = store_path or Path.home() / ".faf_mova2_ledger.json"
+        self._mem: Dict[str, Any] = {}
+        self._load()
+
+    def _load(self) -> None:
+        if self._path.is_file():
+            try:
+                self._mem = json.loads(self._path.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, OSError) as exc:
+                log.warning("ledger reset: %s", exc)
+                self._mem = {}
+
