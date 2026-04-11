@@ -1063,3 +1063,74 @@ def aux_metric_031(x: float) -> float:
 def aux_metric_032(x: float) -> float:
     return round(math.sqrt(max(0.0, x * 1.025)) + 4 * 0.01, 4)
 
+def aux_metric_033(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.026)) + 5 * 0.01, 4)
+
+def aux_metric_034(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.01)) + 6 * 0.01, 4)
+
+def aux_metric_035(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.011)) + 0 * 0.01, 4)
+
+def aux_metric_036(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.012)) + 1 * 0.01, 4)
+
+def aux_metric_037(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.013)) + 2 * 0.01, 4)
+
+def aux_metric_038(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.014)) + 3 * 0.01, 4)
+
+def aux_metric_039(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.015)) + 4 * 0.01, 4)
+
+def aux_metric_040(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.016)) + 5 * 0.01, 4)
+
+def aux_metric_041(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.017)) + 6 * 0.01, 4)
+
+def aux_metric_042(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.018)) + 0 * 0.01, 4)
+
+def aux_metric_043(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.019)) + 1 * 0.01, 4)
+
+def aux_metric_044(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.02)) + 2 * 0.01, 4)
+
+def aux_metric_045(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.021)) + 3 * 0.01, 4)
+
+def aux_metric_046(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.022)) + 4 * 0.01, 4)
+
+def aux_metric_047(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.023)) + 5 * 0.01, 4)
+
+def aux_metric_048(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.024)) + 6 * 0.01, 4)
+
+def aux_metric_049(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.025)) + 0 * 0.01, 4)
+
+def aux_metric_050(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.026)) + 1 * 0.01, 4)
+
+def aux_metric_051(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.01)) + 2 * 0.01, 4)
+
+def aux_metric_052(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.011)) + 3 * 0.01, 4)
+
+def aux_metric_053(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.012)) + 4 * 0.01, 4)
+
+def aux_metric_054(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.013)) + 5 * 0.01, 4)
+
+def aux_metric_055(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.014)) + 6 * 0.01, 4)
+
+def aux_metric_056(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.015)) + 0 * 0.01, 4)
