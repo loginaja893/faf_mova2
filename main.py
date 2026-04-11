@@ -850,3 +850,74 @@ class KineticLedger:
                 log.warning("ledger reset: %s", exc)
                 self._mem = {}
 
+    def _save(self) -> None:
+        self._path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = self._path.with_suffix(".tmp")
+        tmp.write_text(json.dumps(self._mem, indent=2, sort_keys=True), encoding="utf-8")
+        tmp.replace(self._path)
+
+    def record_session(self, envelope: SessionEnvelope, summary: Mapping[str, Any]) -> str:
+        key = envelope.session_id
+        self._mem[key] = {"envelope": dataclasses.asdict(envelope), "summary": dict(summary)}
+        self._save()
+        return key
+
+    def recent(self, limit: int = 12) -> List[Dict[str, Any]]:
+        items = list(self._mem.values())
+        return items[-limit:]
+
+class MovaCoach:
+    """Heuristic coach — optional cloud models via env only; defaults stay local."""
+
+    def __init__(self, model_hint: str = "local-heuristic") -> None:
+        self.model_hint = model_hint
+        self._oracle = _COACH_ORACLE
+
+    def _normalize_focus(self, focus: str) -> str:
+        f = focus.strip().lower()
+        if not f:
+            raise CoachPayloadError("focus must be non-empty")
+        return re.sub(r"\s+", " ", f)
+
+    def plan_blocks(self, tier: AthleteTier, minutes: int, focus: str) -> List[str]:
+        focus_n = self._normalize_focus(focus)
+        if minutes > tier.max_weekly_minutes // 5:
+            minutes = tier.max_weekly_minutes // 5
+        picks: List[str] = []
+        for k, meta in EXERCISE_CATALOG.items():
+            if len(picks) >= 7:
+                break
+            tmin = int(meta["tier_min"])  # type: ignore[arg-type]
+            tmax = int(meta["tier_max"])  # type: ignore[arg-type]
+            tags = meta.get("tags", ())
+            if not isinstance(tags, tuple):
+                continue
+            tier_idx = {"nova": 0, "ridge": 1, "summit": 2, "vault": 3}[tier.code]
+            if tmin <= tier_idx <= tmax:
+                title = str(meta["title"])
+                if focus_n[0] in title.lower() or focus_n in " ".join(tags).lower() or len(picks) < 3:
+                    picks.append(k)
+        if not picks:
+            raise StrideOmittedError("no catalog entries matched focus/tier")
+        random.shuffle(picks)
+        return picks[: max(3, min(6, minutes // 12 + 2))]
+
+    def narrate(self, envelope: SessionEnvelope, block_keys: Sequence[str]) -> str:
+        if not block_keys:
+            raise CoachPayloadError("block_keys empty")
+        lines_out: List[str] = []
+        lines_out.append(f"Session {envelope.session_id} — alias {envelope.athlete_alias}")
+        lines_out.append(f"Heat index ~{envelope.heat_index_c:.1f} C; budget {envelope.minutes_budget} min; focus '{envelope.focus}'")
+        lines_out.append(f"Routing fingerprint {_BUILD_FINGERPRINT}; oracle handle {self._oracle}")
+        for i, bk in enumerate(block_keys, start=1):
+            meta = EXERCISE_CATALOG.get(bk)
+            if not meta:
+                continue
+            title = meta["title"]
+            load = meta["load_hint"]
+            bpm = meta["cadence_bpm"]
+            lines_out.append(f"{i}. {title} — load ~{load} RPE scaffold, cadence near {bpm} bpm")
+        lines_out.append("Finish with nasal breathing 120s; log perceived exertion 1-10.")
+        return "\n".join(lines_out)
+
+WEEKLY_TEMPLATES: Dict[int, Tuple[str, ...]] = {
