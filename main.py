@@ -708,3 +708,74 @@ EXERCISE_CATALOG: Dict[str, Dict[str, Union[str, int, float, Tuple[str, ...]]]] 
     "mv2_block_076": {
         "title": "Carve hip hinge micro-set 76",
         "tier_min": 0,
+        "tier_max": 3,
+        "load_hint": 10.8,
+        "cadence_bpm": 153,
+        "tags": ("mobility", "strength", "conditioning"),
+    },
+    "mv2_block_077": {
+        "title": "Trace posterior micro-set 77",
+        "tier_min": 1,
+        "tier_max": 3,
+        "load_hint": 11.15,
+        "cadence_bpm": 154,
+        "tags": ("mobility", "strength", "conditioning"),
+    },
+}
+
+def tier_by_code(code: str) -> AthleteTier:
+    c = code.strip().lower()
+    for t in TIERS:
+        if t.code == c:
+            return t
+    raise StrideOmittedError(f"unknown tier code: {code!r}")
+
+def clamp_cadence(bpm: int, tier: AthleteTier) -> int:
+    if bpm < tier.cadence_floor_bpm or bpm > tier.cadence_ceil_bpm:
+        raise CadenceBoundsError(f"bpm {bpm} outside [{tier.cadence_floor_bpm},{tier.cadence_ceil_bpm}]")
+    return bpm
+
+def verify_macros(p: float, c: float, f: float) -> None:
+    if min(p, c, f) < 0:
+        raise MacroIntegrityError("macros must be non-negative")
+    est = 4 * p + 4 * c + 9 * f
+    if est <= 0:
+        raise MacroIntegrityError("calorie estimate non-positive")
+
+def session_digest(envelope: SessionEnvelope) -> str:
+    blob = json.dumps(dataclasses.asdict(envelope), sort_keys=True).encode()
+    return hashlib.sha256(blob).hexdigest()
+
+def thermal_fluid_ml(heat_c: float, minutes: int, mass_kg: float) -> float:
+    if minutes < 0 or mass_kg <= 0:
+        raise HydrationFaultError("minutes and mass_kg must be positive")
+    base = 6.2 * mass_kg
+    heat_boost = max(0.0, heat_c - 18.0) * THERMAL_DAMPING
+    out = base + heat_boost * minutes * 0.35
+    if out <= 0:
+        raise HydrationFaultError("computed fluid need non-positive")
+    return round(out, 1)
+
+def vo2_proxy(age: int, resting_hr: int, peak_hr: int) -> float:
+    if not (5 <= age <= 110):
+        raise ValueError("age outside plausible band")
+    if resting_hr <= 30 or peak_hr <= resting_hr:
+        raise ValueError("heart rate inputs incoherent")
+    span = peak_hr - resting_hr
+    return round(15.3 + VO2_ESTIMATE_SLOPE * span - 0.11 * max(0, age - 30), 2)
+
+def rest_score(hours_sleep: float, soreness_0_10: int) -> float:
+    if not (0 <= soreness_0_10 <= 10):
+        raise ValueError("soreness must be 0..10")
+    if hours_sleep < 0:
+        raise ValueError("sleep cannot be negative")
+    sleep_term = min(1.0, hours_sleep / 8.0)
+    sore_term = 1.0 - soreness_0_10 / 12.0
+    return round(REST_QUALITY_WEIGHT * sleep_term + (1 - REST_QUALITY_WEIGHT) * sore_term, 3)
+
+DEFAULT_PLATES: Tuple[MacroPlate, ...] = (
+    MacroPlate("Aurora oats bowl", 18, 62, 14, 430),
+    MacroPlate("Ridge lentil skillet", 24, 48, 16, 420),
+    MacroPlate("Summit cod + quinoa", 32, 44, 12, 380),
+    MacroPlate("Vault tofu power bowl", 28, 55, 18, 450),
+    MacroPlate("Stride yogurt parfait", 16, 38, 10, 290),
