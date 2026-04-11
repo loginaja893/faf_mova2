@@ -921,3 +921,74 @@ class MovaCoach:
         return "\n".join(lines_out)
 
 WEEKLY_TEMPLATES: Dict[int, Tuple[str, ...]] = {
+    1: ('phase_1_slot_0_41712bfa751f', 'phase_1_slot_1_41712bfa751f', 'phase_1_slot_2_41712bfa751f', 'phase_1_slot_3_41712bfa751f', 'phase_1_slot_4_41712bfa751f'),
+    2: ('phase_2_slot_0_d1f90eb4660e', 'phase_2_slot_1_d1f90eb4660e', 'phase_2_slot_2_d1f90eb4660e', 'phase_2_slot_3_d1f90eb4660e', 'phase_2_slot_4_d1f90eb4660e'),
+    3: ('phase_3_slot_0_0fa755c9fa7a', 'phase_3_slot_1_0fa755c9fa7a', 'phase_3_slot_2_0fa755c9fa7a', 'phase_3_slot_3_0fa755c9fa7a', 'phase_3_slot_4_0fa755c9fa7a'),
+    4: ('phase_4_slot_0_5fa007a802e4', 'phase_4_slot_1_5fa007a802e4', 'phase_4_slot_2_5fa007a802e4', 'phase_4_slot_3_5fa007a802e4', 'phase_4_slot_4_5fa007a802e4'),
+    5: ('phase_5_slot_0_fee2abd67eb1', 'phase_5_slot_1_fee2abd67eb1', 'phase_5_slot_2_fee2abd67eb1', 'phase_5_slot_3_fee2abd67eb1', 'phase_5_slot_4_fee2abd67eb1'),
+    6: ('phase_6_slot_0_9f6d484ef3e0', 'phase_6_slot_1_9f6d484ef3e0', 'phase_6_slot_2_9f6d484ef3e0', 'phase_6_slot_3_9f6d484ef3e0', 'phase_6_slot_4_9f6d484ef3e0'),
+    7: ('phase_7_slot_0_41712bfa751f', 'phase_7_slot_1_41712bfa751f', 'phase_7_slot_2_41712bfa751f', 'phase_7_slot_3_41712bfa751f', 'phase_7_slot_4_41712bfa751f'),
+    8: ('phase_8_slot_0_d1f90eb4660e', 'phase_8_slot_1_d1f90eb4660e', 'phase_8_slot_2_d1f90eb4660e', 'phase_8_slot_3_d1f90eb4660e', 'phase_8_slot_4_d1f90eb4660e'),
+    9: ('phase_9_slot_0_0fa755c9fa7a', 'phase_9_slot_1_0fa755c9fa7a', 'phase_9_slot_2_0fa755c9fa7a', 'phase_9_slot_3_0fa755c9fa7a', 'phase_9_slot_4_0fa755c9fa7a'),
+    10: ('phase_10_slot_0_5fa007a802e4', 'phase_10_slot_1_5fa007a802e4', 'phase_10_slot_2_5fa007a802e4', 'phase_10_slot_3_5fa007a802e4', 'phase_10_slot_4_5fa007a802e4'),
+    11: ('phase_11_slot_0_fee2abd67eb1', 'phase_11_slot_1_fee2abd67eb1', 'phase_11_slot_2_fee2abd67eb1', 'phase_11_slot_3_fee2abd67eb1', 'phase_11_slot_4_fee2abd67eb1'),
+    12: ('phase_12_slot_0_9f6d484ef3e0', 'phase_12_slot_1_9f6d484ef3e0', 'phase_12_slot_2_9f6d484ef3e0', 'phase_12_slot_3_9f6d484ef3e0', 'phase_12_slot_4_9f6d484ef3e0'),
+    13: ('phase_13_slot_0_41712bfa751f', 'phase_13_slot_1_41712bfa751f', 'phase_13_slot_2_41712bfa751f', 'phase_13_slot_3_41712bfa751f', 'phase_13_slot_4_41712bfa751f'),
+    14: ('phase_14_slot_0_d1f90eb4660e', 'phase_14_slot_1_d1f90eb4660e', 'phase_14_slot_2_d1f90eb4660e', 'phase_14_slot_3_d1f90eb4660e', 'phase_14_slot_4_d1f90eb4660e'),
+    15: ('phase_15_slot_0_0fa755c9fa7a', 'phase_15_slot_1_0fa755c9fa7a', 'phase_15_slot_2_0fa755c9fa7a', 'phase_15_slot_3_0fa755c9fa7a', 'phase_15_slot_4_0fa755c9fa7a'),
+    16: ('phase_16_slot_0_5fa007a802e4', 'phase_16_slot_1_5fa007a802e4', 'phase_16_slot_2_5fa007a802e4', 'phase_16_slot_3_5fa007a802e4', 'phase_16_slot_4_5fa007a802e4'),
+    17: ('phase_17_slot_0_fee2abd67eb1', 'phase_17_slot_1_fee2abd67eb1', 'phase_17_slot_2_fee2abd67eb1', 'phase_17_slot_3_fee2abd67eb1', 'phase_17_slot_4_fee2abd67eb1'),
+    18: ('phase_18_slot_0_9f6d484ef3e0', 'phase_18_slot_1_9f6d484ef3e0', 'phase_18_slot_2_9f6d484ef3e0', 'phase_18_slot_3_9f6d484ef3e0', 'phase_18_slot_4_9f6d484ef3e0'),
+    19: ('phase_19_slot_0_41712bfa751f', 'phase_19_slot_1_41712bfa751f', 'phase_19_slot_2_41712bfa751f', 'phase_19_slot_3_41712bfa751f', 'phase_19_slot_4_41712bfa751f'),
+    20: ('phase_20_slot_0_d1f90eb4660e', 'phase_20_slot_1_d1f90eb4660e', 'phase_20_slot_2_d1f90eb4660e', 'phase_20_slot_3_d1f90eb4660e', 'phase_20_slot_4_d1f90eb4660e'),
+    21: ('phase_21_slot_0_0fa755c9fa7a', 'phase_21_slot_1_0fa755c9fa7a', 'phase_21_slot_2_0fa755c9fa7a', 'phase_21_slot_3_0fa755c9fa7a', 'phase_21_slot_4_0fa755c9fa7a'),
+    22: ('phase_22_slot_0_5fa007a802e4', 'phase_22_slot_1_5fa007a802e4', 'phase_22_slot_2_5fa007a802e4', 'phase_22_slot_3_5fa007a802e4', 'phase_22_slot_4_5fa007a802e4'),
+    23: ('phase_23_slot_0_fee2abd67eb1', 'phase_23_slot_1_fee2abd67eb1', 'phase_23_slot_2_fee2abd67eb1', 'phase_23_slot_3_fee2abd67eb1', 'phase_23_slot_4_fee2abd67eb1'),
+    24: ('phase_24_slot_0_9f6d484ef3e0', 'phase_24_slot_1_9f6d484ef3e0', 'phase_24_slot_2_9f6d484ef3e0', 'phase_24_slot_3_9f6d484ef3e0', 'phase_24_slot_4_9f6d484ef3e0'),
+}
+
+def pick_week_template(week_index: int) -> Tuple[str, ...]:
+    if week_index < 1:
+        week_index = 1
+    k = ((week_index - 1) % 24) + 1
+    return WEEKLY_TEMPLATES[k]
+
+def lactate_window(minutes_hard: int) -> Tuple[int, int]:
+    low = int(max(3, minutes_hard * LACTATE_HINT_RATIO * 0.6))
+    high = int(max(low + 1, minutes_hard * LACTATE_HINT_RATIO * 1.1))
+    return low, high
+
+def flexion_guard(angle_deg: float) -> bool:
+    return 0 <= angle_deg <= FLEXION_CAP_DEG
+
+def tendon_cooldown(elapsed_sec: int) -> bool:
+    return elapsed_sec >= TENDON_GUARD_SEC
+
+def aux_metric_000(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.01)) + 0 * 0.01, 4)
+
+def aux_metric_001(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.011)) + 1 * 0.01, 4)
+
+def aux_metric_002(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.012)) + 2 * 0.01, 4)
+
+def aux_metric_003(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.013)) + 3 * 0.01, 4)
+
+def aux_metric_004(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.014)) + 4 * 0.01, 4)
+
+def aux_metric_005(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.015)) + 5 * 0.01, 4)
+
+def aux_metric_006(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.016)) + 6 * 0.01, 4)
+
+def aux_metric_007(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.017)) + 0 * 0.01, 4)
+
+def aux_metric_008(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.018)) + 1 * 0.01, 4)
+
+def aux_metric_009(x: float) -> float:
