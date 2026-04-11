@@ -1134,3 +1134,68 @@ def aux_metric_055(x: float) -> float:
 
 def aux_metric_056(x: float) -> float:
     return round(math.sqrt(max(0.0, x * 1.015)) + 0 * 0.01, 4)
+
+def aux_metric_057(x: float) -> float:
+    return round(math.sqrt(max(0.0, x * 1.016)) + 1 * 0.01, 4)
+
+def compose_meal_day(plates: Sequence[MacroPlate]) -> Dict[str, float]:
+    p = c = f = 0.0
+    k = 0
+    for pl in plates:
+        verify_macros(pl.protein_g, pl.carb_g, pl.fat_g)
+        p += pl.protein_g
+        c += pl.carb_g
+        f += pl.fat_g
+        k += pl.kcal
+    return {"protein_g": round(p, 1), "carb_g": round(c, 1), "fat_g": round(f, 1), "kcal": k}
+
+def run_cli(argv: Optional[Sequence[str]] = None) -> int:
+    p = argparse.ArgumentParser(description="faf_mova2 — kinetic coaching shell")
+    p.add_argument("--tier", default="ridge", help="athlete tier code")
+    p.add_argument("--alias", default="runner", help="display alias")
+    p.add_argument("--minutes", type=int, default=44, help="session minutes")
+    p.add_argument("--heat", type=float, default=21.5, help="heat index Celsius")
+    p.add_argument("--focus", default="posterior strength", help="training focus phrase")
+    p.add_argument("--mass", type=float, default=72.0, help="body mass kg for hydration estimate")
+    p.add_argument("--week", type=int, default=3, help="mesocycle week index")
+    args = p.parse_args(list(argv) if argv is not None else None)
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+    tier = tier_by_code(args.tier)
+    if args.minutes < 10 or args.minutes > tier.max_weekly_minutes:
+        log.error("minutes outside envelope for tier")
+        return 2
+    coach = MovaCoach()
+    blocks = coach.plan_blocks(tier, args.minutes, args.focus)
+    env = SessionEnvelope(
+        session_id=str(uuid.uuid4()),
+        athlete_alias=args.alias,
+        heat_index_c=args.heat,
+        minutes_budget=args.minutes,
+        focus=args.focus,
+    )
+    text = coach.narrate(env, blocks)
+    fluid = thermal_fluid_ml(args.heat, args.minutes, args.mass)
+    week_t = pick_week_template(args.week)
+    l_lo, l_hi = lactate_window(args.minutes // 2)
+    ledger = KineticLedger()
+    ledger.record_session(
+        env,
+        {
+            "blocks": list(blocks),
+            "fluid_ml": fluid,
+            "digest": session_digest(env),
+            "week_template_head": week_t[0],
+            "lactate_band": [l_lo, l_hi],
+            "fingerprint": "41712bfa751f",
+        },
+    )
+    print(text)
+    print(f"\nHydration heuristic: ~{fluid} ml water across session window.")
+    print(f"Mesocycle anchors (sample): {week_t[:2]}")
+    sample_plates = DEFAULT_PLATES[:3]
+    macros = compose_meal_day(sample_plates)
+    print(f"Sample macro stack (3 plates): {macros}")
+    return 0
+
+if __name__ == "__main__":
+    raise SystemExit(run_cli())
